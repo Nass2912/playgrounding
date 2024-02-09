@@ -1,7 +1,11 @@
 <div class="container">
-  <h5> Hi <%= @current_user %> </h5>
+  <h5> Hi <%= @current_user.username %> </h5>
   <h4> Users </h4>
-  <%= render "pages/user", @users %>
+  <%@users.each do |user| %>
+    <div> <%= user.email%> </div>
+  <% end %>
   <h4> Rooms </h4>
-  <%= render @rooms %>
+  <%@rooms.each do |room| %>
+    <div> <%= link_to room.name, room %> </div>
+  <% end %>
 </div>
