@@ -11,14 +11,11 @@
     <% if @single_room %>
       <%= turbo_stream_from @single_room %>
       <div id="messages">
+          <%= render @messages %>
       </div>
       <%= render partial: 'layouts/new_message_form' %>
       <h4 class="text-center"> <%= @single_room.name %> </h4>
       <div>
-      <% if @message %>
-        <h6 class="name"> <%= @message.user %> </h6>
-        <%= @message.content %>
-      <% end %>
       </div>
     <% end %>
   </div>
