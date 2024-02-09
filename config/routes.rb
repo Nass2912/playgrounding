@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  resources :rooms
+  resources :rooms do
+    resources :messages
+  end
   root to: 'rooms#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

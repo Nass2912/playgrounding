@@ -1,11 +1,36 @@
 <div class="container">
   <h5> Hi <%= @current_user.username %> </h5>
   <h4> Users </h4>
-  <%@users.each do |user| %>
-    <div> <%= user.email%> </div>
-  <% end %>
+  <%= turbo_stream_from "users" %>
+  <div id="users">
+    <%@users.each do |user| %>
+      <div> <%= user.email%> </div>
+    <% end %>
+  </div>
+  <div class="col-md-10 bg-dark text-light">
+    <% if @single_room %>
+      <%= turbo_stream_from @single_room %>
+      <div id="messages">
+      </div>
+      <%= render partial: 'layouts/new_message_form' %>
+      <h4 class="text-center"> <%= @single_room.name %> </h4>
+      <div>
+      <% if @message %>
+        <h6 class="name"> <%= @message.user %> </h6>
+        <%= @message.content %>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
   <h4> Rooms </h4>
-  <%@rooms.each do |room| %>
-    <div> <%= link_to room.name, room %> </div>
+  <%= form_with(model: @room, remote: true, class: "d-flex" ) do |f| %>
+    <%= f.text_field :name, class: "form-control", autocomplete: 'off' %>
+    <%= f.submit data: { disable_with: false } %>
   <% end %>
+  <%= turbo_stream_from "rooms" %>
+  <div id="rooms">
+    <%@rooms.each do |room| %>
+      <div> <%= link_to room.name, room %> </div>
+    <% end %>
+  </div>
 </div>
